@@ -1,0 +1,333 @@
+---
+title: "Getting Started Building Docker Images with Gradle"
+description: "Getting Started Building Docker Images with Gradle."
+image: "../../public/blogs/christina-wocintechchat-com-OtHEYbQXLFU-unsplash.jpg"
+publishedAt: "2022-08-11"
+updatedAt: "2022-08-11"
+author: "Codecog"
+isPublished: true
+tags: 
+- Technology
+- cloud
+- docker
+- gradle
+- web development
+---
+
+## Introduction
+
+It is no news that Gradle is the most popular build tool for Java Virtual Machine (JVM) projects
+on GitHub, you can check out the performance benchmarks for Gradle
+[here](https://blog.gradle.org/gradle-vs-bazel-jvm). In this guide, you will learn about how to build a Docker Image with Gradle. As a gentle reminder, your projects can always be organized into subprojects to structure your software project into useful modules, you would understand what this is like as you progress through the guide. Now, let me get you started with this step-by-step guide.
+
+## WHAT YOU'LL BUILD
+To reiterate, you'll be building a Docker image with the Gradle Build Tool. In case you're wondering what Docker or a Docker image is, Docker is _a set of platform-as-a-service offerings that use OS-level virtualization for software delivery_, while a Docker image is a read-only file that includes instructions for creating a Docker container. Want to know more? You should definitely check this [article](https://docker.com/resources/what-container) out.
+## WHAT YOU'LL NEED
+Going forward, you'll need some set of resources to successfully build a Docker image for your project, and the following resources that have been itemized below are exactly all what you need to get started;
+### Resources:
+* [Gradle distro](https://gradle.org/install)
+* The open source [gradle-docker-plugin](https://github.com/bmuschko/gradle-docker-plugin)
+* An Integrated Development Environment (IDE) – example; [the IntelliJ IDEA](https://jetbrains.com/idea/download)
+* Your application
+
+So before getting our hands dirty, it is worthy to note that the [gradle-docker-plugin](https://github.com/bmuschko/gradle-docker-plugin) we would be using has support for Java and Spring boot applications, and there are three plugins available for use
+– the [Remote API Plugin](https://bmuschko.github.io/gradle-docker-plugin/#usage), the [Java Application Plugin](https://bmuschko.github.io/gradle-docker-plugin/#usage_2), and the [Spring Boot Application Plugin](https://bmuschko.github.io/gradle-docker-plugin/#usage_3). For the purpose of this guide, we’ll be making use of the [Remote API Plugin](https://bmuschko.github.io/gradle-docker-plugin/#usage). All of these plugins are available on the [Gradle Plugin Portal](https://plugins.gradle.org/search?term=com.bmuschko.docker).
+
+## CREATE A PROJECT FOLDER
+
+There are a number of ways that _*Gradle*_ can come in handy for your JVM project, but the most common way is the _build automation process_, which would be the key thing we would be doing – outlining build tasks for Gradle to process using a Domain Specific Language (DSL), we would be using the *Groovy DSL* in this guide. And in order to get on with outlining build tasks, you have to decide which project it is you’re running a build process for. If you do not have a project to run a build process for, you can create a new project by starting off with
+creating a new folder. This new folder would house the whole of the new project.
+
+To do this, head over to your desired directory, create a new folder for your project and switch to the new
+folder.
+```sh
+mkdir projectname
+cd projectname
+```
+Note: There are comprehensive [guides](https://gradle.org/guides) on the Gradle website that will walk you through how to build applications using Gradle. You can keep following along if you’re working with a Java application, otherwise, jump over to the _APPLY THE PLUGIN_ [section](#apply-plugin).
+
+## RUN THE INIT TASK
+Now that we have a root folder setup for the project, it is now time to wave our first magic wand, the `gradle init` command. Now don't fret, what this command does is automatically initialize and create the necessary _Gradle_ files needed to build the new project. With Gradle,
+you have the opportunity and flexibility of stating the exact things you want Gradle to do for you by using some keywords to state instructions – these instructions are called `tasks`.
+
+Gradle is shipped with a built-in task, called `init` which initializes a new Gradle project. This is what Gradle does every time we tell it `init`. Right there, inside your new project folder (within a
+terminal console), run the `gradle init` command. After doing this, Gradle would prompt you to select the project type to generate, enter *2* for application. Next, Gradle asks for the language to implement the project in, enter *3* for Java. Next, choose a build script DSL, select *1* - as we would be using Groovy for this guide. Hit *Enter* for the rest of the prompts to
+make use of the default values of the prompts.
+```sh
+gradle init
+```
+
+## REVIEW THE PROJECT FILES
+Before proceeding, it is essential to know what the above files and folders do. And in order to understand this, kindly proceed to this guide on the [official Gradle website](https://docs.gradle.org/current/samples/sample_building_java_applications_multi_project.ht
+ml#review_the_project_files).
+
+The parts of these project files that are essential to building a Docker image are the build scripts – the *build.gradle* files. These build scripts are where you outline your own instructions (tasks) for Gradle, and the main build script to work with here is the `build.gradle(.kts)` build file in `buildSrc` – this is where our list of tasks would go into, it is also where we would be adding the open source `gradle-docker-plugin` we would be working with.
+
+```groovy
+//buildSrc/build.gradle
+plugins {
+id 'war'
+id 'groovy-gradle-plugin'
+}
+version = '1.0'
+sourceCompatibility = 1.7
+repositories {
+gradlePluginPortal()
+}
+```
+## RUN THE TESTS
+
+In case you’ve written any unit tests for your project files (or want to run the Gradle-generated tests, you can skip to the next step if this doesn’t interest you), the command to run to get an analysis of your test is `./gradlew check`. Run this command within a subproject or the subprojects you’d like to test. Test reports would be generated to the `{subproject}/buid/reports` folder within that specific subproject you have run the `./gradlew check` command.
+
+## RUN THE APPLICATION
+You can check out the new project by running it via the `./gradlew run` command, which basically instructs Gradle to run the `mainClass` property of your project.
+
+
+## BUNDLE THE APPLICATION
+It is now time to generate an archive file that we would be building into a Docker image, the basic command to do this is the `./gradlew build` command which builds and compiles the whole project and generates both an `app.tar` and an `app.zip` file inside the `app/build/distributions` folder.
+
+
+## PUBLISH A BUILD SCAN
+There is an optional flag that can be appended to the above command, the `--scan` flag. With this flag, you get the opportunity to get more analysis about the build process of your project. So running `./gradlew build --scan` would generate a URL at the end of the build processes, this URL is a link to the remote location of the details of your build process – hence, the build scan.
+
+## APPLY THE PLUGIN
+Now that we have a build of our project, the very next step is to apply the `gradle-docker-plugin` to the content of our project. To do this, create a new file titled **docker.gradle** inside the *gradle* folder within your project (this *gradle* folder houses the *wrapper* folder
+for gradle-wrappers). Paste the following code inside **gradle/docker.gradle**.
+```groovy
+//gradle/docker.gradle
+buildscript {
+//Access to the plugin portal
+repositories {
+gradlePluginPortal()
+}
+
+//Plugin addition that helps Gradle interacting with Docker
+dependencies {
+classpath 'com.bmuschko:gradle-docker-plugin:6.7.0'
+}
+}
+apply plugin: com.bmuschko.gradle.docker.DockerRemoteApiPlugin
+```
+
+Then go inside `buildSrc/build.gradle`, and paste in the script below
+
+```groovy
+//buildSrc/build.gradle
+//other scripts
+apply from: 'gradle/docker.gradle'
+```
+
+In order to make use of `gradle-docker-plugin`, you must add Gradle’s Plugin Portal as a repository inside the `repositories` block, this will grant you access to all community plugins in the Gradle’s plugin portal – including the `gradle-docker-plugin`. As you can observe, in order to use a plugin, you are required to declare this needed plugin as a dependency in the `dependencies {}` script block.
+
+## CONFIGURE THE PLUGIN
+In order to use Docker effectively with the plugin, it is important to provide the credentials needed to host the image we’ll be publishing to the _Docker Hub registry_. These credentials can be provided as project properties within the `gradle.properties` file in the home directory
+for your current user, alternatively, the credentials can be provided as environment variables.
+
+To do this, modify the *gradle/docker.gradle* file to reflect the script below
+
+```groovy
+buildscript {
+//repositories {…}
+//dependencies {…}
+docker {
+newProject {
+
+maintainer = 'YOUR_NAME &quot;YOUR_EMAIL&quot;'
+}
+registryCredentials {
+username = getCredential('DOCKER_USERNAME', 'docker.username')
+password = getCredential('DOCKER_PASSWORD', 'docker.password')
+email = getCredential('DOCKER_EMAIL', 'docker.email')
+}
+}
+//apply plugin:[…]
+String getCredential(String envVar, String sysProp) {
+System.getenv(envVar) ?: project.findProperty(sysProp)
+}
+}
+```
+The plugin has been added to the project, and Docker has been configured, what next? I hear you ask, well, it is time to outline the specifics of what tasks we need Gradle to perform. For building our Docker image, we need to run the following tasks listed below sequentially.
+* Create a Dockerfile
+* Build an image using the Dockerfile
+* Push the image to a Docker registry
+
+## CREATE A DOCKERFILE
+So, we’ll be kicking off by creating a Dockerfile – which is essentially generating a Dockerfile using of the methods provided by the `Dockerfile` task, this task is also helpful in populating the Dockerfile. To do this, modify the *gradle/docker.gradle* file to reflect the script below
+
+```groovy
+buildscript {
+//repositories {…}
+//dependencies {…}
+//docker {…}
+
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+
+task dockerCreateDockerfile(type: Dockerfile) {
+group = 'Docker'
+destFile = project.file('build/docker/Dockerfile')
+from 'dockerfile/java:openjdk-7-jre'
+maintainer 'YOUR_NAME &quot;YOUR_EMAIL&quot;'
+copyFile war.archiveName, '/app/projectname.war'
+entryPoint 'java'
+defaultCommand '-jar', '/app/projectname.war'
+exposePort 5701
+runCommand 'apk --update --no-cache add curl'
+}
+task dockerSyncBuildContext(type: Sync) {
+dependsOn assemble
+from tar.archivePath
+into dockerCreateDockerfile.destFile.parentFile
+}
+dockerCreateDockerfile.dependsOn dockerSyncBuildContext
+//apply plugin:[…]
+//String getCredential(…) {…}
+}
+```
+By running the above task, the `dockerCreateDockerfile` method will produce Dockerfile instructions in the `build/docker/Dockerfile` file similar to the ones listed as statements within the `dockerCreateDockerfile` method. These instructions tell Docker to do the following; to copy the built WAR file when creating the Docker image, then the application’s main class should be automatically executed with the `java` command -when starting the image inside of a
+Docker container. And once the application is up and running, the container should expose the application’s functionality through the open port *5701*.
+
+## BUILD AN IMAGE USING THE DOCKERFILE
+Now it is time to build an image using the Dockerfile we created. Before proceeding, ensure your Docker environment is up and running, and your environment variables (or project settings) have been modified to reflect your Docker credentials. Moving on, we will be using the `DockerBuildImage` task to take care of all the implementation details necessary to build a Docker image. To do this, modify the *gradle/docker.gradle* file to reflect the script below
+
+```groovy
+buildscript {
+//repositories {…}
+//dependencies {…}
+//docker {…}
+
+//import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+//task dockerCreateDockerfile(type: Dockerfile) {…}
+//task dockerSyncBuildContext(type: Sync) {…}
+//dockerCreateDockerfile.dependsOn dockerSyncBuildContext
+task dockerBuildImage(type: DockerBuildImage) {
+group = 'Docker'
+dependsOn dockerCreateDockerfile
+inputDir = dockerCreateDockerfile.destFile.parentFile
+tag = &quot;bashirk/projectname:$war.version&quot;
+}
+//apply plugin:[…]
+//String getCredential(…) {…}
+}
+```
+As you might have observed, the `DockerBuildImage` task takes care of the building of the image, you only need to point the `DockerBuildImage` task to the location of the Dockerfile and the War file – and, yes, provide a tag. This tag lists a target Docker repository for your project, and also the version number of your project. You might also want to ensure you have built the correct Docker image for your project, to do this you only need to run the command `docker images` which would show you a list of the images you have built that are ready for deployment.
+
+
+## PUBLISH THE DOCKER IMAGE
+We have built the Docker image, and it is high time we publish the image we have built to a public Docker Hub registry. A Docker Hub is basically a resource repository for published Docker images, public or private. To have your image published to a public Docker
+Hub registry, modify the *gradle/docker.gradle* file as follows
+
+```groovy
+buildscript {
+//repositories {…}
+//dependencies {…}
+//docker {…}
+
+//import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+//import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+
+//task dockerCreateDockerfile(type: Dockerfile) {…}
+//task dockerSyncBuildContext(type: Sync) {…}
+//dockerCreateDockerfile.dependsOn dockerSyncBuildContext
+//task dockerBuildImage(type: DockerBuildImage) {…}
+task dockerPushImage(type: DockerPushImage) {
+group = 'Docker'
+dependsOn dockerBuildImage
+conventionMapping.imageName = { dockerBuildImage.getTag() }
+}
+//apply plugin:[…]
+
+//String getCredential(…) {…}
+}
+```
+
+Congratulations! You just published a Docker image built with Gradle to a Docker Hub registry.
+
+At this point, you should have a _*gradle/docker.gradle*_ file like this below
+
+```groovy
+buildscript {
+//Access to the plugin portal
+repositories {
+gradlePluginPortal()
+}
+//Plugin addition that helps Gradle interacting with Docker
+dependencies {
+classpath 'com.bmuschko:gradle-docker-plugin:6.7.0'
+}
+//Docker configuration
+docker {
+
+newProject {
+
+maintainer = 'Korede Bashir &quot;bashirkorede@gmail.com&quot;'
+}
+registryCredentials {
+username = getCredential('DOCKER_USERNAME', 'docker.username')
+password = getCredential('DOCKER_PASSWORD', 'docker.password')
+email = getCredential('DOCKER_EMAIL', 'docker.email')
+}
+}
+//Imports for the necessary task actions
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+//Task to create Dockerfile
+task dockerCreateDockerfile(type: Dockerfile) {
+
+group = 'Docker'
+destFile = project.file('build/docker/Dockerfile')
+from ‘dockerfile/java:openjdk-7-jre’
+maintainer ‘Korede Bashir &quot;bashirkorede@gmail.com&quot;'
+copyFile war.archiveName, '/app/projectname.war
+entryPoint 'java'
+defaultCommand '-jar', '/app/projectname.war
+exposePort 5701
+runCommand 'apk --update --no-cache add curl'
+}
+task dockerSyncBuildContext(type: Sync) {
+dependsOn assemble
+from java.archivePath
+into dockerCreateDockerfile.destFile.parentFile
+}
+dockerCreateDockerfile.dependsOn dockerSyncBuildContext
+//Task to build image
+task dockerBuildImage(type: DockerBuildImage) {
+group = 'Docker'
+dependsOn dockerCreateDockerfile
+inputDir = dockerCreateDockerfile.destFile.parentFile
+tag = &quot;bashirk/projectname:$war.version&quot;
+}
+//Task to publish image
+task dockerPushImage(type: DockerPushImage) {
+group = 'Docker'
+dependsOn dockerBuildImage
+conventionMapping.imageName = { dockerBuildImage.getTag() }
+}
+apply plugin: com.bmuschko.gradle.docker.DockerRemoteApiPlugin
+String getCredential(String envVar, String sysProp) {
+System.getenv(envVar) ?: project.findProperty(sysProp)
+}
+}
+```
+
+## SUMMARY
+In this guide you learnt how to initialize and build a new project with Gradle, and also learnt to build this new project into a Docker image, and published the Docker image to a public registry.
+
+Now let’s do a recap (TL;DR); the *gradle/docker.gradle* file will create the Dockerfile, produce the Docker image with the latest changes in the `TAR` file and push this image to a Docker Hub registry; in doing this, we walked through some steps, which includes how to:
+* Use `gradle init` to initialize a new Java application
+* Modularize a project into subprojects
+* Run tests and generate test reports
+* Build and bundle the application
+* Apply the plugin for creating Docker images
+* Configure the plugin
+* Create a Dockerfile
+* Build a Docker image
+* Publish a Docker image
+
+## NEXT STEPS
+It might interest you to learn more details about the Gradle build tool as well as the plugin used with Gradle to generate and build the Docker image in this guide, do check out the following resources:
+- [The Gradle Docker Plugin documentaion](https://bmuschko.github.io/gradle-docker-plugin).
+- [Building Java and JVM projects](https://docs.gradle.org/current/userguide/building_java_projects.html).
+- The Java application plugin [documentation](https://docs.gradle.org/current/userguide/application_plugin.html).

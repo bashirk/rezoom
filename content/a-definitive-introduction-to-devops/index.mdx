@@ -1,0 +1,238 @@
+---
+title: "A Definitive Introduction to DevOps and the Azure DevOps Suite"
+description: A Definitive Introduction to DevOps and the Azure DevOps Suite
+image: "../../public/blogs/roman-synkevych-vXInUOv1n84-unsplash.jpg"
+publishedAt: "2022-03-13"
+updatedAt: "2022-03-13"
+author: "Codecog"
+isPublished: true
+tags: 
+- code quality
+- devops
+- azure
+---
+
+
+Preface: This article would get you to know exactly what DevOps is, guide you through a real-world application of DevOps, get you in sync with Azure Cloud DevOps practices with a step-by-step guide, and finally walk you through the process of creating an Azure DevOps organization account on the Azure DevOps suite.
+
+The word DevOps means Development Operations, and it is basically the marrying together of people (engineers and management :wink:), products (software projects), and processes (steps required in the creation of software features) to enable the continuous delivery of value to the end users. Which means that DevOps is all about the developments and operations required in getting a software from development stage to a release stage. It's also a model around the development and operations needed to improve the collaboration process between the engineers of a software.
+
+You can read more about my post on DevOps and how to become a Cloud Engineer, [here](https://iink.netlify.app/blogs/the-proven-way-to-become-a-cloud-engineer-in-2022/).
+
+DevOps categorically includes many features and tools to help a team collaborate and streamline its development processes. For instance, say you're a new DevOps Engineer in a software company, you would journey through DevOps by essentially beginning with an introduction to the company's core software team members, who are discovering that they need to improve and streamline their software release processes.
+
+
+DevOps essentially helps with streamlining release processes which includes the need to have some incremental and frequent changes in software features. So...
+
+To begin with, this introductory guide is split into four sections that would comprehensively get you to understand the traditional method of software development, the reasons DevOps is essential, and the Azure Cloud DevOps processes required to change this traditional method. As a start...
+
+• The first section would be to analyze an example company's current release process and identify problems that arise from this release process.
+
+• The second section would be to evaluate this example company's release process - with Value Stream Maps (VSMs) - using a specific Key Performance Index (KPI).
+
+• The third section would be to introduce you to Azure DevOps, take you through how the team could migrate the company's release process entirely to Azure DevOps.
+
+• Finally, the fourth section would walk you through the process of creating an Azure DevOps organization account on the Azure DevOps suite.
+
+By the end of these four sections, I believe you would have successfully wrapped your head around what DevOps is, the necessity of working with an Azure DevOps process, and would have also created your very first DevOps organization account.
+
+Section 1: Analyze an example company's current release process
+
+In this first section, we would be analyzing a software development company (say, Softbro) that is focused on building software projects for partner companies who outsource their software needs. And, this new company hosts the software applications, websites, and servers - required by these partner companies - in an on premises datacenter.
+
+On one faithful day, a partner company celebrated the release of a product to production, and through word of mouth - this partner company got the Softbro company a partnership deal from a new company. Say, for instance, the name of this new company is Unisoft. And Unisoft has gone on to agreeing a deal with Softbro to build them a web project within a few months.
+
+Softbro then puts together a team to work on this new software project, and this new team is composed of;
+
+A Development Lead who enjoys working on personal coding projects during his leisure period. This Dev Lead is a coding whiz and has been working with binaries and code since he was a kid, he always wishes he had more leisure time. Time has never been enough for this Dev Lead.
+
+An Operations guy who likes practical solutions and is very cautious (this makes perfect sense, as Ops is the first point of contact whenever there is an issue from somewhere).
+
+A Tester who is really good at organizing and setting priorities, and lives to find edge cases (What IFs). This tester is equally calm, which is great - you can not understand the joy of having a gentle tester.
+
+A Product Owner who has been in the software industry for decades. He has a relatively predetermined mindset, but he's always game whenever he gets an update on anything that can help his team get products to market with less efforts, and faster. He has been known to always favour tight schedule over team members, but equally acts friendly towards software development teams.
+
+All these roles are the setup in a basic product development team.
+
+After a month, the rest of the team presented a first preview of the software to the Product Owner, who in turn signed off release to the Unisoft company. Right after this sign off, the Product Owner got word from Unisoft about issues with the released software. He immediately called everyone into a meeting, furiously. Yelled at everyone on the team - for not rightfully meeting specifications. He furiously reads a number of the problems, and angrily shouts - "How many weeks would it take you all to fix these issues?!"
+
+None of these team members were able to provide a concise response to the question. Yeah, the team is in panic! And the team then gathered around at an open space, after the Product Owner had left, to find a quick fix to this list of problems.
+
+During their discussion, a DevOps engineer overheard the rants - and jumped in. The first question this DevOps engineer asked the Development Lead was, "How does a software move from development to production in your company?"
+
+The Dev Lead provided a series of responses, and from these responses, the DevOps engineer was able to realize a number of defects in the company's current release process; he realized the company uses a waterfall approach, which is only ideal for a team with minimal goals (and who still does minimal goal-setting, anyway?). A lot of the activities involved in the company's process are manual, and management keeps setting the priorities. Bad!
+
+This DevOps engineer eventually came up with a game-changing plan the following day, which was to religiously assess and evaluate the company's Waterfall process using a Value Stream Maps (VSMs) exercise. And this is exactly what I'll be covering in the next section.
+
+Section 2: Evaluate the company's current release process
+
+In this second section, you will be learning about Value Stream Maps (VSMs) - as discussed - and how to use a VSM to literally understand where a product release process needs improvement. Finally, you will get to understand how this Value Stream Map exercise gives you a good starting point, as a developer, to discuss exactly why DevOps practices should be encouraged - with management LOL.
+
+Practices in DevOps often begin with an understanding of a company's existing processes, which is what we have done in the first Section. By getting to know existing processes, as a DevOps engineer, you can easily come up with a plan to evaluate what's working and what's not, and also prioritize the things to fix first, without getting orders from management (management should be concerned with results, not setting priorities). Duh!
+
+By creating a Value Stream Map, or VSM, we are giving up room to allow an easy visualization of the process of development throughout a value chain, from the moment a software feature is requested until it is delivered to the customer. A Value Stream Map also helps in the analysis of a current release cycle process. The purpose of a VSM, essentially, is to visually show where in a software release process does a team create value and where in this process does the team creates wastes (spending an unnecessary amount of time). The goal of VSM, therefore, is to arrive at a process that delivers maximum value (fulfill requirements) to the customer with minimum wastes (spending less time). A VSM can help pinpoint those areas that either don't contribute any value or that actually reduce the value of a product.
+
+As DevOps engineers, we would be creating a VSM exercise to help us better understand the faults behind the existing process of the analyzed company. Using VSM, we would be checking whether the team is matured enough to typically release faster, with greater confidence, and with fewer bugs by going the DevOps route. Interestingly, we would also be getting a sense of where the team fits into in the DevOps model of software release processes.
+
+You can learn more about VSM, and how to implement VSM for DevOps, here:
+
+After going through the resource in the link posted above, and applying same to the Softbro company's release process discussed in section one of this guide, the VSM in the image below was derived:
+
+
+
+
+This VSM shows each of the components involved in getting the software from commit to deployment. It also indicates the number of days the Softbro team has assigned to each of these components.
+
+Below is an analysis of how the Softbro team has planned out the release cycle of Unisoft's software, using just a single feature of the software, which is exactly how the VSM above was brought to life.
+
+After the requirements of a feature have been specified by Unisoft, the Dev Lead creates a label via a centralized source control system. This Dev Lead then takes his time to confirm that all code for existing features is stable before creating the label. When this label has been created, the rest of the team gets an email confirmation to begin writing code for the new feature. This process of labeling and confirmation takes 3 days and is a waste to customers time, since it isn't a process that adds value to the customer - it's only necessary.
+
+Writing code for the software feature would take about 4 days, for all developers on the team. This time has value to the customer.
+
+Overall, the development process takes 7 days, but just 4 days is what the customer would want to know as the Development Process.
+
+Right after the team has decided unanimously to have a stable build, a spreadsheet is updated to confirm this decision, and also to notify the Tester in the team that there's a build ready for testing. This notification takes 2 days.
+
+After the Tester finishes testing the build, the process has already taken 3 days since testing is done manually. When the testing process is over, the tester mails bug reports back to the Dev Lead.
+
+When the Dev Lead gets feedback from the Tester, he needs to understand the bugs and issues and assign them to the right developers on the team.
+
+This takes another 3 days.
+
+These testing processes do not add value to the customer too, but necessary all the same.
+
+By the time the Tester gets and approves the final build, and transfers this build to the Operations guy for deployment to pre-production servers for more testing before final production, 2 days have already gone. Deployments to pre-production servers don't add value as well, they are also only necessary.
+
+After this build is now finally ready for final release, the Product Owner needs to schedule a meeting with management before signing off the release for the Ops guy to push the feature to production. The Product Owner eventually takes 4 days to have a meeting with management who officially reviews and approves the release.
+
+This Ops guy finally takes 1 day to deploy the feature to production, the feature release gets to the customer the same day. And everyone becomes happy. This final part of all the operations processes only add value to the customer, which takes up 1 day.
+
+From the mappings above, it would be deduced that the number of days that add value value to the customer is just 5 days - the number of days required to write the feature code, 4, plus the number of days it takes Operations to deploy the feature for the customer, 1. This time taken is the Process Time (PT).
+
+We can also deduce that the entire number of days it takes the feature to move through the entire release process, from commit to deployment is 22 days. This time taken is the Total Lead Time (TLT).
+
+It now becomes paramount, to determine the performance of the team through this software feature release process, which brings us to the next step, which is to calculate the Key Performance Indicators(KPIs) in the release process and evaluate the release process - in order to effectively show management the reason the company must switch to DevOps (numbers don't lie, they say).
+
+A notable KPI is the Activity Ratio (AR), which is calculated by dividing the Process Time (PT) by the Total Lead Time (TLT). That is, AR = PT/TLT.
+
+Where, PT is the time spent on a feature that has value to the customer. While, TLT is the time it takes for a feature to make it to the customer.
+
+As can be observed on our VSM board, our Activity Ratio is 5 days divided by 22 days, that is - 5/22 = 0.23. This in turn, brings the efficiency (Activity Ratio * 100%) of the current release process to 23%, which isn't up to 1/4. Poor, right?
+
+Bettering and improving this efficiency is our goal, and we can only do this by drifting to the third section of this introductory guide; which is to...
+
+Section 3: Change the company's current release process to Azure DevOps
+
+In this third section, I would be introducing you to Azure DevOps and the amazing services that come with the Azure Cloud DevOps suite.
+
+Going back to the company crisis we want to solve from the second section; with the Azure DevOps process, we would be able to minimize time spent that has no real value to the customer. Azure DevOps would really improve efficiency by automating a lot of the steps , and that will definitely cut down on the time. But before going forward...
+
+What is Azure DevOps?
+
+Azure DevOps is a collection of services from the Azure Cloud that gives organizations and individuals the tools required to carry out development operations (DevOps) practices. DevOps practices that ensure transparency, cooperation, continuous integration and continuous delivery become embedded in a company's software development lifecycle, with the Azure DevOps service offering. Azure DevOps empowers organizations and individuals to build, test, and deploy any software project, be it to the cloud or on premise servers.
+
+Azure DevOps also provides several tools that can be used for an improved team collaboration, and includes tools for automating builds, testing, source control, and package management. You would be learning about these tools before the end of this guide.
+
+In the meantime, here are some of the areas where Azure DevOps would help each of the Softbro team members;
+
+Azure DevOps would help the Tester out by helping her save time through getting her updated, automatically, whenever there is a new build scheduled for testing, as the development team rarely update the Tester on new builds (yeah, that feeling when dev believes a code might be buggy).
+
+Azure DevOps would also help the Development Lead speed up the process of checking in with developers to find out what they've built in-order to build and schedule code for testing immediately. It would also help him reduce the number of time it takes him to get a build label on the code for a feature.
+
+More importantly, Azure DevOps would help the team across board, without mixing up with nor damaging the team's current process - as a number of the manual steps would be automated and not replaced.
+
+But before the software product team begins to migrate the company's release process entirely to Azure DevOps processes. I would like to share insights into the Azure DevOps practices that the product team would be implementing during the migration process, which are;
+
+• Agile Planning: This is the practice used to create a backlog of work. With this practice, everyone on the team and in management sees this created backlog, and with this, the team can easily prioritize items. This is so that the team know exactly what they need to work on first. The created backlog can include user stories, bugs, and any other information that can better help the team plan.
+
+• Continuous Integration (CI): This is the practice used in the integration of code into a shared repository multiple times a day. Continuous Integration is also utilized in automating how a team builds and tests code. Continuous Integration is run every time a team member commits changes to a team's version control.
+
+• Continuous Delivery (CD): Continuous Delivery is a software development practice where code changes are automatically prepared for a release to production. During Continuous Delivery, a team tests, configures, and deploys from a build to a production environment.
+
+• Monitoring: Monitoring is the process of getting information about the performance and usage patterns of an application, using telemetry. A team ultimately uses this retrieved information to improve development and iterate the process.
+
+These Azure DevOps practices are essential in taking a project through the DevOps route, and more details around these practices would be discussed as you progress through the article. These DevOps practices also involves metrics (to be discussed later) that help in identifying the real reasons many high performers within a team are able to make valuable contributions - to the team - like integrating new features and improvements to softwares way more faster than the other team members.
+
+These metrics for distinguishing high performers from low performers within a team could be categorized into four parts, these parts are listed below.
+
+• Lead Time: High performers reduce lead time (from commit to deployment) by working to get features quickly to customers; through automating manual processes and deploying more frequently.
+
+• Failure Rate: High performing team members reduce feature fail rate. Whenever a new feature is deployed to production, and this feature fails or causes some other features of a product to fail, it definitely increases the chance of missed opportunities between a company and its customers. High performers ensure there is a reduction in the feature fail rate.
+
+• Deployment Rate: High performing team members help in increasing the deployment rate for product features. It is a fact, that, some high performing teams of high performers deploy up to dozens of times per day.
+
+• Crisis Recovery: High performers help teams recover more faster when crisis occur or situations occur. This is due to the fact that these high performers recover more quickly themselves while also deploying more frequently. This is a "Move Fast, Break Things, and Fix Things Faster" mantra.
+
+These amazing metrics of high performers are due to their non-stop utilization of DevOps practices during planning and development which include monitoring, continuous testing, database management, and security integration.
+
+So to transform a team of low performers to a team of high performers, team members would need to imbibe these metrics of DevOps characteristics as traits. Meaning, DevOps is the reason many high performers are able to tick off these metrics. And as an addition, DevOps practices help teams and companies better experiment multiple avenues to increase customer satisfaction, which essentially leads to higher profitability and market share often times.
+
+As a recap, Azure DevOps would help the Softbro team to excellently implement all the metrics that have just been discussed. Azure DevOps, as a suite of DevOps services, helps provide solutions for any organization or individual who wants an enterprise-grade service. By working with Azure DevOps, you get five (5) amazing services - which are the 5 main pillars of Azure DevOps. These services are discussed below, in no direct order:
+
+• Azure Boards: Azure Boards is an agile (like VSM) tool that can help organizations and individuals plan, track, and discuss workflows, even with other teams or companies.
+
+• Azure Pipelines: Azure Pipelines lets teams and individuals continuously build, test, and deploy with CI/CD that works with any language, platform, and cloud.
+
+• Azure Test Plans: Azure Test Plans are literally explanatory testing tools.
+
+• Azure Repos: Azure Repos provide unlimited private and public Git repos hosted on the Azure Cloud.
+
+• Azure Artifacts: Azure Artifacts enables teams and individuals to create, host, and share software packages.
+
+Finally, the Softbro team can now successfully migrate the company's release process entirely to Azure DevOps processes, after understanding the practices and processes involved in the Azure Cloud DevOps - as well as its underlying services. The team could ultimately use the Azure Boards service to start out with Agile planning (like an VSM) on the to-be-delivered Unisoft project. The Azure Boards service would be comprehensively discussed in another article
+
+But as discussed, I'll be walking you through how to create an Azure DevOps organization, which brings us to the last section of the guide.
+
+Section four: Creating a DevOps organization on the Azure Cloud
+
+We will be using the Azure DevOps suite that houses the services discussed in the third section, to create an Azure DevOps organization account which Microsoft would be hosting for you. If in any case, you do not need Microsoft to host your organization account, you can decide to go the Azure DevOps Server route, which is an on premises version of Azure DevOps services that can be installed and run on a personal network.
+
+In addition, Microsoft only provides free Azure DevOps accounts for individuals, small teams, and open-source organizations. Enterprises can sign up for Azure DevOps accounts which can be scaled to thousands of team members. A free Azure DevOps organization account is what we would be signing up for in this guide.
+
+Getting Started
+
+• Create an Azure DevOps organization account
+
+In-order to create an Azure DevOps organization account, visit dev.azure.com, to get started.
+
+While on this page, click the Start free button, and sign in by using your Microsoft account - if you don't have a Microsoft account, select Create One to get your free Microsoft account.
+
+Next, agree with the terms of service by clicking on Continue. You will be automatically assigned to be the owner of this organization account, as you're the person creating the Azure DevOps organization, you can invite and add members to roles on the organization account later. When this has been setup, it's time to...
+
+• Create an organization
+
+Now, we would be setting up an organization within the newly created account. To do this, click on the Create new organization button. If there's an organization within your account already, click on the New organization option, and hit Continue.
+
+
+
+
+Select, and fill, in a unique name - if your chosen name says 'has already been taken' you can include numbers to increase the uniqueness. This doesn't affect your the quality of your projects. For example, Unisoft1234.
+
+
+
+
+Next, choose a location that is close to you as this is where your projects would be hosted. Click Continue. And that's it! You have just created an Azure DevOps organization account. Aannddd...
+
+It's A Wrap!
+
+In this comprehensive guide, I walked you through what DevOps is, guided you through a real-world application of DevOps, got you in sync with Azure Cloud DevOps practices with a step-by-step guide, and finally walked you through the process of creating an Azure DevOps organization account on the Azure Cloud - which is quite simple.
+
+You also learnt to evaluate high performing team members in comparison to low performing team members with some metrics like Key Performance Indicators (KPIs), by getting to know that high performers help get features to production with few failures, more faster. Thus, DevOps provides team members with a direct path to becoming high performers.
+
+These metrics encourage teams to have goals that are measurable and specific. To ensure that these targets are being met and goals achieved, it's a necessity for teams to agree on metrics and Key Performance Indicators (KPIs) that achieve a positive return on investment and focus on specific business outcomes. Below is a list of commonly used metrics and Key Performance Indicators, not discussed early, but that apply to DevOps teams:
+
+• Unplanned Work Percentage (UWP): This metric helps in the identification of the percentage of work being performed that is unplanned.
+
+• Failed Builds Percentage (FBP): This metric helps in the identification of the percentage of builds that are failing.
+
+• Failed Deployments Percentage (FDP): This metric helps in the identification of the overall percentage of deployments are failing.
+
+• Ticket Volume (TV): This metric helps in the identification of the overall volume of customer issue tickets.
+
+• Bug Bounce Percentage (BBP): This metric helps in the identification of the overall percentage of customer bug tickets that are being reopened.
+
+• SLA Achievement (SA): This metric helps in ascertaining whether a team is meeting drafted service level agreements (SLAs).
+
+In conclusion, you learnt about DevOps practices, which takes time to be fully adopted by teams coming from a traditional background. As traditionally, the faster software is delivered, the lower the quality, and slower software projects are engineered, the higher the quality of the engineered software. Hence, it used to be a common belief that higher-quality softwares always take longer.
+
+DevOps practices are changing this narrative, as one of the promises of DevOps is to deliver software faster and with higher quality. These DevOps processes help teams find problems and bugs earlier, which means that they would take less time to fix these issues.

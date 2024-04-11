@@ -1,0 +1,146 @@
+---
+title: "How to Add a Static IP to an AWS EC2 Instance"
+description: "How to Add a Static IP to an AWS EC2 Instance."
+image: "../../public/blogs/kelly-sikkema--1_RZL8BGBM-unsplash.jpg"
+publishedAt: "2023-02-19"
+updatedAt: "2023-02-19"
+author: "Codecog"
+isPublished: true
+tags:
+- cloud
+- Technology
+- how-to
+- aws
+- web development
+---
+
+## Introduction
+
+AWS Elastic Compute Cloud (EC2) is a popular option for cloud computing services. It offers virtual servers (or instances) as well as security, networking, and storage options. EC2 can launch as many or as few virtual servers as you need, depending on your projects. 
+
+Using EC2 offers multiple benefits, including the ability to run your applications in the cloud and to create virtual machines (VMs) with whatever configurations you might need. The infrastructure is scalable, with over 500 instances, and EC2 supports developing macOS and machine learning applications.
+
+EC2 works with static (aka elastic) IP addresses. Whenever a resource on a network is assigned an IP address, that IP address is either dynamic—meaning it’s assigned by the network it’s connected to and changes periodically—or static, meaning it never changes. An elastic IP address in EC2 is public, so it’s reachable from the internet. Because it’s set to your AWS account, an elastic IP address can be remapped to another instance as needed in case of bugs or other issues. A custom IP address can also be added to your account rather than use one from AWS.
+
+> Elastic IP addresses are provided via a Dynamic Host Configuration Protocol (DHCP). These IP addresses are persistent, meaning they will not change when the VM is restarted or shut down. 
+
+In this tutorial, I'll walk you through how to configure an elastic IP address with an AWS EC2 instance.
+
+
+## Prerequisites
+
+This article doesn't have many prerequisites, it is a tutorial which will assume you already have an AWS EC2 instance provisioned already, that is ready to be associated with an elastic IP address. In case you do not already have an AWS EC2 instance running, please create one before proceeding with the rest of this guide. 
+
+Let's dive right in! 
+
+## Step 1: Choosing Elastic IP
+
+From the AWS console, navigate to EC2 by clicking **Compute**. This should take you straight to your EC2 dashboard.
+
+![Navigate to dashboard](https://imgur.com/AcyqPMa.png)
+
+On your dashboard, click on **Elastic IPs** under **Network & Security**.
+
+![Elastic IPs](https://i.imgur.com/Dkj9fZf.png)
+
+## Step 2: Creating New IP
+
+Click on **Allocate Elastic IP address** to create a new static IP address.
+
+![Allocate IP](https://i.imgur.com/RZHubN1.png)
+
+Proceed by clicking **Allocate**.
+
+![IP options](https://i.imgur.com/tOHiIeq.png)
+
+![Click to proceed](https://i.imgur.com/7fTbBsv.png)
+
+## Step 3: Assigning IP to EC2 Instance
+
+Once the allocation request is successful, assign the static IP to your EC2 instance.
+
+On the elastic IP view, select the IP you just allocated and click the **Actions** dropdown.
+
+![Actions menu](https://i.imgur.com/lAH3ayu.png)
+
+ Select the **View details** button to reveal the info page on the elastic IP.
+
+![Elastic IP details](https://i.imgur.com/qmj3cHd.png)
+
+On this page, click the **Associate Elastic IP address** button.
+
+![Associate IP address](https://i.imgur.com/G7dxeV5.jpg)
+
+## Step 4: Associating IP to Instance
+
+Search for your instance ID from the **Instance** field.
+
+![Locate instance ID](https://i.imgur.com/Qk9mmxw.jpg)
+
+Select the instance ID and scroll down to click the **Associate** button.
+
+![Associate IP](https://i.imgur.com/qHKIKA8.jpg)
+
+## Step 5: Checking The Instance View
+
+Your elastic IP address has now been associated with your EC2 instance. Head to your instance view by clicking on your instance ID. The address of your static IP is now displayed on the view.
+
+![IP associated successfully](https://i.imgur.com/O1pU17c.jpg)
+
+## Step 6: Connecting to The Instance
+
+Connect to your EC2 instance with the newly associated static IP. On your instance view, click **Connect**. A view with connection details can now be seen. If you’re using a Linux or Mac system, open up your terminal.
+
+![Instance summary](https://i.imgur.com/0Ev8QuC.jpg)
+
+Select *SSH* on the connect view. This tutorial connects via SSH through PowerShell.
+
+![Connect to instance](https://i.imgur.com/mEA9rqh.jpg)
+
+Set permissions on private key if you haven’t already by pasting one of the below commands in your terminal or CLI:
+
+**Option A: Linux**
+
+```bash
+chmod 400 vpckey.pem
+```
+**_set permission on Linux for an EC2 instance private key_**
+![Set permissions on Linux for private key](https://i.imgur.com/X57vVuQ.jpg)
+
+**Option B: Windows (PowerShell)**
+
+```powershell
+ICACLS "vpckey.pem" /grant:r "bashirk:(F)" /C
+```
+**_set permission on Windows for an EC2 instance private key_**
+![Set permissions on Windows for private key](https://i.imgur.com/nw5GwTC.jpg)
+
+You can copy-paste the second command shown on your instance description to connect to your remote instance:
+
+![Connect to EC2 instance](https://i.imgur.com/ZykYflI.jpg)
+
+Enter *Yes* to proceed.
+
+![CLI connected to instance](https://i.imgur.com/zDkmiG0.jpg)
+
+The instance is now connected, as shown below, this was validated by confirming the present working directory with the command `pwd`. Please proceed with building whatever solution you want to deploy on your EC2 instance.
+
+![Connected EC2 instance](https://i.imgur.com/GsV1pvf.jpg)
+
+## Limits on Elastic IPs
+
+According to this AWS documentation on service quotas, “Your AWS account has default quotas, formerly referred to as limits, for each AWS service.”
+The important thing to understand is that static IPs on EC2 instances have a limit of five IPs per region per account, so you can’t allocate more than five static IPs in the same AWS region. If you already have up to five elastic IPs, you can either delete one or select a new AWS region before allocating a new IP.
+
+If you need to confirm your elastic IP address limit, head over to your EC2 dashboard. Select **Limits** from the left pane and type in *IP* in the search box. You should immediately see the **EC2-VPC Elastic IPs** limit. Click on it for more details about the limit quota.
+
+Remember, the good thing about elastic IPs is they don’t change or expire, unless they are disassociated from an instance and released.
+
+Request an increase to your quota from the [Service Quotas Console](https://console.aws.amazon.com/servicequotas/) if the need arises.
+
+
+## Conclusion
+
+In this tutorial, you learned how to set up an elastic IP address and connect it remotely with your AWS EC2 instance. As you saw, this is a simple process that gives you more control over your EC2 instance and allows you to choose your own IP address for as long as you need it.
+
+If you have any questions, feel free to reach out to me on [LinkedIn](https://linkedin.com/in/bashir-korede)

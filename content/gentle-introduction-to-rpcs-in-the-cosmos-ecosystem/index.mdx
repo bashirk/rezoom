@@ -1,0 +1,142 @@
+---
+title: "Gentle introduction to Remote Procedure Calls (RPCs) in the Cosmos ecosystem"
+description: "Gentle introduction to Remote Procedure Calls (RPCs) in the Cosmos ecosystem"
+image: "../../public/blogs/paul-esch-laurent-oZMUrWFHOB4-unsplash.jpg"
+publishedAt: "2023-01-09"
+updatedAt: "2023-01-09"
+author: "Codecog"
+isPublished: true
+tags:
+- rpc
+- web development
+- Technology
+- cloud
+- web3
+---
+
+## Introduction
+
+Remote procedure calls (RPCs) are the ability of one program to call a
+subroutine or function that is located in another program and has been
+given an address. At a high level, this means that we can make a request
+to another computer (e.g., a different process on the same computer or a
+process on another computer) to execute some code and get back a
+response as output. When building distributed applications, one of the
+most challenging problems is how to propagate information among
+different nodes in a fast and reliable way. In this article, you will be
+introduced to RPCs in the Cosmos ecosystem.
+
+### Why are remote procedure calls important?
+
+There are several importance of RPCs; let's take a look at a few of
+them:
+
+* Remote procedure calls require minimal effort whenever there\'s a need for another development of the code.
+
+* RPC omits many of the protocol layers to improve performance.
+
+* RPCs support models that are thread-oriented.
+
+* RPCs are also used in both local and distributed environments.
+
+## RPCs in the Cosmos Ecosystem
+
+RPCs are a fundamental building block of any distributed system. The
+ability to call a subroutine that is located in another program that has
+been given an address is a crucial feature of distributed computing. In
+the Cosmos ecosystem, RPCs are used to propagate information among
+different nodes, which could be on the same computer or on other
+computers. The Cosmos SDK provides you with an Application Blockchain
+Interface (ABCI)
+[boilerplate](https://docs.cosmos.network/main/core/baseapp.html),
+an RPC-compliant implementation, which provides all the basic
+functionalities you can use to create application layers. The ABCI
+interface connects state machines with consensus engines to form
+functional nodes.
+
+### Defining an RPC in the Cosmos Network
+
+An RPC definition in Cosmos is in the form of a
+[query](https://docs.cosmos.network/main/building-modules/messages-and-queries.html#queries),
+which is the request made by end-users to the response node. The query
+is JSON-RPC compliant {Request, Response} pair, and it consists of the
+function the user wants to execute and the input parameters. Optionally,
+the RPC may have a return value.
+
+To understand how RPCs work in the Cosmos network, let's look at an
+example. Imagine that you own a company and you want to transfer money
+from one of your accounts to another. This is done by making a request
+to your bank. The bank receives your request, verifies it, and then
+executes the transfer. In the same manner, an RPC is a request made by
+an end user to a response node, which then verifies the request and
+executes the function.
+
+## Querying the Cosmos Network with the gRPC
+
+One of the most common use cases for RPCs is making queries to the
+network. You might want to query the network because you want to find
+out what the current state of a particular action is, or you might want
+to find out the addresses of peers that can help you propagate a given
+action. For instance, you may want to query the network to find out who
+issued a given token or find out who is currently responsible for a
+given token (i.e., the token's issuer). The gRPC provides you with a
+language-agnostic way to make all these queries to the network; in fact,
+you can even use it to query other distributed systems, such as
+Kubernetes, that support the gRPC protocol. Typical query objects can be
+of the form:
+```ts
+type QueryNameForRequestInCamelCase struct {
+  
+  VarId datatype
+
+// Insert your request variables and data types
+}
+type QueryNameForResponseInCamelCase struct {
+  
+  VarResponse datatype
+
+// Insert your response variables and data types
+}
+```
+### Synchronous & Asynchronous RPCs
+
+RPCs in the Cosmos ecosystem come in two flavors: synchronous and
+asynchronous. While both flavors perform the same remote procedure call,
+their underlying implementations are very different. Synchronous RPCs
+are always blocking remote procedure calls: your program stops running
+while the remote procedure call is being executed. Asynchronous RPCs, on
+the other hand, return a future object that represents the remote
+procedure call; the program will continue executing while the future
+object is awaiting the result of the remote procedure call. Asynchronous
+RPCs are, therefore, useful in scenarios where you want to continue
+executing your program while the remote procedure call is being executed
+in the background. On the flip side, asynchronous RPCs are also useful
+when you want to make sure that your program does not block and does not
+affect other remote procedure calls on the network.
+
+### Remote procedure calls with network persistence
+
+One of the most useful features of the Cosmos SDK is the ability to make
+RPCs with network persistence. Network persistence in the Cosmos network
+means that the Cosmos SDK attempts to resend an RPC to the network if it
+fails. The Cosmos SDK will first execute the remote procedure call, and
+if the remote procedure call succeeds, it will return the result of the
+remote procedure call. If the remote procedure call fails, the Cosmos
+SDK retries the call based on a set of secondary conditions that the
+Cosmos SDK will check before retrying the remote procedure call. If any
+of the conditions are met, the Cosmos SDK will retry the remote
+procedure call; if all conditions fail, the Cosmos SDK then exits with
+an error.  
+
+## Summary
+
+RPCs are a fundamental building block of any distributed system. In the
+Cosmos ecosystem, RPCs are used to propagate information among different
+nodes, and they come in two flavors: synchronous and asynchronous.
+Synchronous RPCs are always blocking remote procedure calls: your
+program stops running while the remote procedure call is being executed.
+Asynchronous RPCs, on the other hand, return a future object that
+represents the remote procedure call: your program will continue
+executing while the future object is awaiting the result of the remote
+procedure call. In this article, we reviewed what RPCs are, and how to
+define RPCs in the Cosmos network.

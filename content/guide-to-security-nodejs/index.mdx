@@ -1,0 +1,340 @@
+---
+title: "Guide to security in NodeJS"
+description: "Guide to security in NodeJS."
+image: "../../public/blogs/lauren-mancke-aOC7TSLb1o8-unsplash.jpg"
+publishedAt: "2023-03-27"
+updatedAt: "2023-03-27"
+author: "Codecog"
+isPublished: true
+tags:
+- Technology
+- cloud
+- nodejs
+- javascript
+- web development
+---
+
+*Suggested keyword:* *security nodejs*
+
+*Suggested meta:* *When creating great software, security is the first
+step of development. This guide will discuss key security concepts when
+building software using Node.js.*
+
+## Introduction
+
+![A picture containing multiple keys](https://raw.githubusercontent.com/bashirk/bashirk/static/svg/sec_key.jpg)
+
+In this post, you're going to learn about security in Node.js and best
+practices to secure your Node.js apps. Security, in this case, means
+safeguarding data. To build great software and systems, you have to
+think about security from the first stage of your development roadmap.
+This means that security should be at the core of your software
+development process. 
+
+This guide will take you through key security concepts to consider when
+building software using Node.js. Let's start by seeing how Node.js
+already supports security practices. 
+
+### Security and Node.js: A Primer
+
+Most importantly, the strength of the Node.js core lies in the community
+around it. The Node.js community prioritizes security as a key factor in
+the development of Node.js. This has led to the creation of the Node.js
+[Security Working
+Group (SWG)](https://github.com/nodejs/security-wg), whose
+mission is to improve the security of applications built using Node.js.
+It does so by bringing vulnerability data from the community to the Node
+Security Platform, while also maintaining the vulnerability data on
+disclosed security vulnerabilities. The SWG also ensures vulnerabilities
+in Node packages are properly documented and, consequently, makes known
+security issues openly reported. 
+
+However, you should note that SWG is *not* responsible for managing or
+responding to security reports against Node.js itself. The [Node.js
+TSC](https://github.com/nodejs/TSC) owns that
+responsibility. 
+
+## Relevant Libraries or Frameworks in Node.js
+
+Node.js has several modules that improve the efficiency of software
+applications. Accordingly, properly integrating these modules will
+improve the security of your Node.js applications. In addition, these
+modules are free to add, and they improve the overall efficiency of
+Node.js apps while tightening up loose ends. I'm going to go over a few
+of these libraries and frameworks. 
+
+### 1. Express.js
+
+The first on the list is
+[Express](https://expressjs.com/), which is a Node.js
+framework that you can use when you need to easily handle verb actions
+like GET, POST, and DELETE requests in Node.js. It handles each of these
+requests with different paths known as routes. Express.js uses the
+Node.js middleware idea to deliver middleware modules that solve
+specific and key problems in Node.js like security. 
+
+Next on the list is Helmet.   
+
+### 2. Helmet.js
+
+[Helmet](https://helmetjs.github.io/) is an Express
+middleware, and it helps in setting various HTTP response headers for
+securing GET and POST requests in Node.js apps. It's used as an HTTP
+Headers Security module. It delivers middleware functions that set HTTP
+headers. 
+
+These HTTP headers include the following: 
+
+-   **helmet.contentSecurityPolicy()** sets the Content-Security-Policy header, which helps mitigate cross-site scripting attacks (XSS).
+
+-   **helmet.xssFilter()** disables browsers' buggy cross-site scripting filter by setting the X-XSS-Protection header to 0.
+
+You can go through [this list](https://helmetjs.github.io/) to see all the HTTP headers you can set up in your Node.js application using Helmet. 
+
+Next, we'll go through the Node.js module for securing passwords,
+Bcrypt. 
+
+### 3. Bcrypt
+
+[Bcrypt](https://www.npmjs.com/package/bcrypt) is a
+password security module offered by Node.js. The Bcrypt library protects
+users from attacks like brute forcing. This is made possible through a
+hashing method called salting. To clarify, salting is a technique that
+involves the act of adding random strings to passwords before the actual
+hashing takes place. 
+
+In order to do that, "the Bcrypt library uses a **.genSalt()** method
+to generate a salt and hash," according to the Bcrypt documentation. 
+
+With separate functions for both salt and hash, you can generate a
+password hash, and then a salt, like below. 
+```js
+bcrypt.genSalt(saltRounds, function(err, salt) {
+  bcrypt.hash(PlainPassword, salt, function(err, hash) {
+    // Store password hash in database
+  });
+});
+```
+And with separate function calls, you can auto-generate both a salt and
+a hash, like below. 
+```js
+bcrypt.hash(PlainPassword, saltRounds, function(err, hash) {
+  // Store password hash in database
+});
+```
+Passwords can be checked for correctness by using the block of code
+below. The function returns **true** when the hashed password matches
+the plain password. 
+```js
+// Load hash from your password DB.
+bcrypt.compare(PlainPassword, hash, function(err, result) {
+  // result == true
+});
+```
+
+![grayscale photo of padlock on metal fence](https://raw.githubusercontent.com/bashirk/bashirk/static/svg/pad_key.jpg)
+
+### 4. Validator.js
+
+Next on the list is Validator, which is an input validation module. It
+enforces the need for user inputs to be what they're required to be. In
+the same vein, it ensures input correctness. [This
+list](https://www.npmjs.com/package/validator) includes all
+the validators you can configure with the Validator package. 
+
+### 5. ESLint Plugin
+
+Another way to improve your Node.js app's security is to integrate
+ESLint, which is a linting security plugin that helps to identify
+vulnerable Node.js code during development. Vulnerable code
+implementations include unsafe regular expressions, an 'await' keyword
+inside *for* loops, and so on. 
+
+You can get more details on how to use this plugin to write less
+vulnerable code
+[here](https://www.npmjs.com/package/eslint-plugin-security). 
+
+## Security Best Practices
+
+Regardless of what applications you're building with Node.js, you
+should carry out key security procedures at the first stage of
+development. So, to keep your Node.js application secure and free of
+vulnerabilities, it's important to implement essential security best
+practices while building out your Node.js app. We'll go through a
+couple of those in this section. 
+
+### Always Audit Node Modules
+
+Firstly, it's imperative to always audit each node module you use in
+your project for vulnerability checks. Auditing helps to confirm which
+package is available for an upgrade. When you audit packages, you're
+also confirming the security of the package. 
+
+Consequently, in order to audit packages/modules and check for
+vulnerable dependencies, you can use tools like Snyk, Node Security
+Project (NSP), or run npm-audit to track down and patch
+vulnerabilities. 
+
+![Graphical user interface, text, application Description automatically generated](https://raw.githubusercontent.com/bashirk/bashirk/static/svg/audit_node.png)
+
+### Always Use Rate Limiting
+
+Secondly, attacks like brute forcing are a common security threat to
+Node.js apps, and login routes are the most targeted for this form of
+attack. Rate limiting helps to limit the impact of brute force attacks.
+The Node.js
+[ratelimiter](https://www.npmjs.com/package/ratelimiter)
+package helps in the integration of rate limiting into your Node.js
+apps. With the ratelimiter module, you can limit middleware
+implementation against the ID of a user. 
+```js
+var id = req.user._id;
+var limit = new Limiter({ id: id, db: db });
+limit.get(function(err, limit){
+  if (err) return next(err);
+  res.set('X-RateLimit-Limit', limit.total);
+  res.set('X-RateLimit-Remaining', limit.remaining - 1);
+  res.set('X-RateLimit-Reset', limit.reset);
+
+  // looks good
+  debug('remaining %s/%s %s', limit.remaining - 1, limit.total, id);
+  if (limit.remaining) return next();
+
+  // does not look good
+  var delta = (limit.reset * 1000) - Date.now() | 0;
+  var after = limit.reset - (Date.now() / 1000) | 0;
+  res.set('Retry-After', after);
+  res.send(429, 'Rate limit exceeded, retry in ' + ms(delta, { long: true }));
+});
+```
+
+The Express Brute
+[package](https://libraries.io/npm/express-brute) also
+does rate limiting to mitigate brute forcing and denial of service (DoS)
+attacks. 
+
+### Use TLS/SSL for Data Transmission
+
+Thirdly, data confidentiality is important when transmitting data from
+one layer to the other, to prevent sniffing from potential attackers.
+One common way to secure the transport of data through encryption is to
+use transport layer security (TLS) and secure sockets layer (SSL). To
+clarify, SSL encrypts the client-server connection end to end, and TLS
+secures password data and sensitive information like credit card
+details. 
+
+### Escape Outputs
+
+Furthermore, in order to avoid injection attacks like cross-site
+scripting (XSS), output escaping plays a key role. XSS will be explained
+later in this post. To escape outputs in your code, you can make use of
+the [Node ES API
+library](https://github.com/ESAPI/node-esapi) or the
+[Escape HTML
+library](https://github.com/component/escape-html) to
+escape all JavaScript and HTML code that users get access to. 
+
+### Log and Monitor Your Apps
+
+Finally, loads on servers can cause DoS, which may lead to app downtime.
+It's therefore important to monitor incoming and outgoing traffic into
+the servers, and you can always be alerted when servers are under
+extreme load. And if your servers are crashing not because of extreme
+loads, but due to security attacks, it's imperative to use logs
+properly to understand how and when the security attack happened. The
+[Bunyan](https://www.npmjs.com/package/bunyan) Node.js
+module helps in the efficient logging of your Node.js services. The
+[TooBusy](https://www.npmjs.com/package/toobusy-js)
+Node.js module is an essential tool for monitoring Node.js apps. 
+
+The [OWASP Node.js Security Cheat
+Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Nodejs_Security_Cheat_Sheet.html#nodejs-security-cheat-sheet)
+includes a comprehensive list of security best practices. Understanding
+security attacks and key ways to mitigate these attacks is a key
+security embrace---and this is what the next section entails. 
+
+## Most Common Node.js Security Attacks
+
+There are several Node.js security attacks, but we'll review the common
+ones in detail in this section. 
+
+### SQL Injection
+
+[SQL
+injection](https://www.stackhawk.com/blog/what-is-sql-injection/)
+involves the insertion of an SQL query through input data from the user
+to the application. These attacks make use of areas in applications that
+ask for user inputs. The attacker carrying out the SQL injection attack
+will be able to gain access to the database of the application after a
+successful attack. You can read more on SQL injection on StackHawk. 
+
+To prevent an injection attack, input validation is key, and the
+Validator package mentioned above helps with proper input validation.
+The Validator module has allowlist and blocklist validation methods that
+are about explicitly declaring what you want to be authorized in your
+input validation process and blocking out everything else. 
+
+### Cross-Site Scripting (XSS)
+
+[XSS](https://www.stackhawk.com/blog/what-is-cross-site-scripting-xss/)
+involves the injection of client-side scripts into websites. With XSS,
+attackers are able to manipulate web applications with the aim of
+sending malicious code to the users of the web app. XSS attacks have the
+objective of either stealing users' data or taking control of the web
+application. 
+
+![Graphical user interface, application Description automatically generated](https://raw.githubusercontent.com/bashirk/bashirk/static/svg/xss.png)
+
+To [prevent an XSS
+attack](https://www.stackhawk.com/blog/nodejs-xss-guide-examples-and-prevention/),
+you'll need to use secure HTTP headers according to the requirements of
+your project. Helmet, mentioned above, delivers middleware functions
+that set secure HTTP headers. 
+
+### Command Injection
+
+Command injection involves the injection of input that alters valid and
+legal commands in vulnerable applications in order to execute illegal
+commands against the operating system. This attack is mostly against the
+system shell. The input injection can come from any source that the user
+can modify, such as forms. This attack targets the system shell. 
+
+Again, [to prevent an injection
+attack](https://www.stackhawk.com/blog/nodejs-command-injection-examples-and-prevention/),
+input validation is key. 
+
+### Cross-Site Resource Forgery (CSRF)
+
+[CSRF](https://www.stackhawk.com/blog/node-js-csrf-protection-guide-examples-and-how-to-enable-it/)
+is a form of session hijacking where a user is forced to run malicious
+actions on an application that they're currently authenticated to. In a
+CSRF attack, attackers hijack the sessions of real users, thereby
+bypassing security rules for non-users. 
+
+To prevent CSRF attacks, you need to implement tokens that will be
+generated on the server side. The
+[csurf](https://www.npmjs.com/package/csurf) Node.js
+package helps in the generation of valid CSRF tokens.
+[OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Storage_Cheat_Sheet.html#rule---use-cryptographically-secure-pseudo-random-number-generators-csprng)
+has also provided best practices for generating tokens. 
+
+### Path Traversal
+
+[Path
+traversal](https://www.stackhawk.com/blog/node-js-path-traversal-guide-examples-and-prevention/)
+involves the act of accessing directories in a file server illegally due
+to weak security validation. In this kind of attack, an attacker is able
+to access server files by the injection of malicious user inputs into
+the web application. This attack feeds upon vulnerable implementations
+of access control settings.
+
+To prevent an attack of this form, allowlisting plays a key role. Input
+validation plays a vital role, too. 
+
+## Conclusion
+
+In this guide, you learned about security essentials in Node.js, the
+packages and libraries available to mitigate vulnerability attacks, and
+best practices to tighten up security in your Node.js app. Certainly,
+security should be a priority during development and enmeshed in every
+facet of your next Node.js app. 

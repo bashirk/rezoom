@@ -1,0 +1,37 @@
+---
+title: "Azure Front Door: An Overview"
+description: "Azure Front Door: An Overview."
+image: "../../public/blogs/charlesdeluvio-cZr2sgaxy3Q-unsplash.jpg"
+publishedAt: "2022-02-22"
+updatedAt: "2022-02-22"
+author: "Codecog"
+isPublished: true
+tags:
+- web development
+- cloud
+- devops
+- azure
+- technology
+---
+
+This is a gentle brief of the **Azure Front Door** service offering from Microsoft Azure. Azure Front Door, as the appellation implies, serves as a tunnel that routes connection to your backend networks *scalably*. The service isn't really for everyone, as it's mostly useful for large enterprise applications that handle a huge influx of incoming connection requests to their backend resources, where the performance of these resources is equally paramount.
+
+***Azure Front Door*** is a member of the load balancing family; but shouldn't be mistaken with the [Azure Load Balancer service](https://docs.microsoft.com/en-us/azure/load-balancer/load-balancer-overview); ***Front Door*** and ***Load Balancer*** both help ensure network performance for the [Azure](https://portal.azure.com) cloud offering. The *load balancing family* includes a number of other services like; [Azure Content Delivery Network](https://azure.microsoft.com/en-us/services/cdn), [Azure Traffic Manager](https://docs.microsoft.com/en-us/azure/traffic-manager/traffic-manager-overview), [Azure Application Gateway](https://docs.microsoft.com/en-us/azure/application-gateway/overview), and some other third party services like Citrix, Cloudflare, F5, Kemp etc. All of these ensure your software applications run *efficiently* even when there's a huge influx of requests to your application, as long as the incoming requests are distributed evenly. Similarly to *Azure Traffic Manager*, Azure Front Door is resilient to failures, including failures to an Azure region.
+
+*Interestingly*, Azure Front Door was initially released in 2013 in a bid to ensure that Microsoft service offerings like Office 365 are enhanced in performance, before being rolled out to the general public in 2018. Front Door does not just help with load balancing, it also ensures the high availability of your application. You can tunnel multiple websites through Azure Front Door.
+
+With Front Door, you are assured of a wide range of traffic-routing methods through the [Microsoft Global Network](https://docs.microsoft.com/en-us/azure/networking/microsoft-global-network) that spans across over **50** Azure regions, *Azure Front Door* uses a [Layer 7](https://www.cloudflare.com/learning/ddos/what-is-layer-7/) (HTTP/HTTPS layer) content switching technology by implementing an AnyCast protocol with *split TCP*. Ensuring successful directs of requests at the application layer. 
+
+![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/evm6hpjsyklx8b3cswwb.png)
+
+Azure Front Door always facilitates the routing of client requests to the most available resource. Front Door offers an array of *request-routing* methods and resource health monitoring options in order to satisfy the various application needs as well as cases of automatic failovers. 
+
+The Front Door service enables you to define, manage, and monitor the global routing for your web traffic by enhancing resource *performance* and *reliability* through a quick global failover process.
+
+The routing of requests with Azure Front Door works in a way that the servers do not replicate the same content, but the servers effectively “pass the baton” amongst themselves, this allows for the increment in performance. To put that into context, say, there are four servers serving contents from an application; by using Azure Front Door, ***Server 1*** could be in charge of supplying images and graphic contents, ***Server 2*** could be in charge of delivering static contents to the site visitors using scripting and contents like CSS and HTML, while ***Server 3*** could be the one allowing a user to buy specific items on the site, and ***Server 4*** could be delivering the contents related to payment processing.
+
+![Alt Text](https://dev-to-uploads.s3.amazonaws.com/i/jujvvvi1jzfwlt9ljms6.png)
+
+>>As you have probably noticed, Front Door allows for much more complex systems of application and content delivery based on real resource usage. 
+
+For details around the pricing and cost calculation of the *Azure Front Door* service, you can peep that [here](https://azure.microsoft.com/pricing/details/frontdoor/).

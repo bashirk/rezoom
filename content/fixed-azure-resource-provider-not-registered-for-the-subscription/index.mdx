@@ -1,0 +1,41 @@
+---
+title: "FIXED: Azure - Resource provider not registered for the subscription"
+description: "FIXED: Azure - Resource provider not registered for the subscription."
+image: "../../public/blogs/c-d-x-PDX_a_82obo-unsplash.jpg"
+publishedAt: "2021-08-25"
+updatedAt: "2021-08-25"
+author: "Codecog"
+isPublished: true
+tags:
+- productivity
+- cloud
+- azure
+- serverlesss
+---
+
+## The Problem
+If you have been following any tutorial around creating bots on Azure, and you hit the weird roadblock that tells you;
+
+```
+Resource provider Microsoft.BotService not registered for the subscription
+```
+
+!['Resource Provider error'](https://github.com/bashirk/azure_webapp_node/raw/assets/Screenshot%202020-08-19%20at%2011.57.24%20AM.png)
+
+Fret not, 'cause you have just stumbled on the fix!
+
+
+## The Solution
+Now, let us walk through the fix together. 
+
+First off, head over to *Subscriptions* (you can search for this from the Azure [portal](https://portal.azure.com)), then you should select the specific *Subscription* that shows you that error.
+
+Now that you're inside that subscription, search for **Resource Providers**. There would definitely be a lot of providers here, so just do a **filter by name** for ***Bot***, now should see the sneaky cause of the bug;
+
+!['Microsoft.Bot'](https://dev-to-uploads.s3.amazonaws.com/i/r2zalil5ras1kvg6hhh3.png)
+
+In my case, the Microsoft.BotService Request Provider already indicates *Registered* - and yes, I still see the bug. If it shows *Unregistered*, you do have to register the provider by clicking the *Register* button above the Request Provider. And if it already has a **Registered** green tick (like mine), what we both want to do here is unregister the provider, then register it again. That should work. Simple, innit?
+
+
+## The Conclusion
+And there you have your fix to the *Resource provider not registered bug*. This fix is the way to hard-refresh Request Providers in Azure, works for all Request Providers - not just the Microsoft Bot Service.
