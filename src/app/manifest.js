@@ -1,8 +1,8 @@
 export default function manifest() {
     return {
-      name: 'Next.js App',
-      short_name: 'Next.js App',
-      description: 'Next.js App',
+      name: 'The Refume Blog',
+      short_name: 'The Refume Blog',
+      description: 'The Refume Blog',
       start_url: '/',
       display: 'standalone',
     //   background_color: '#fff',

@@ -17,6 +17,7 @@ const toggle = () =>{
 }
   return (
     <header className="w-full p-4  px-5 sm:px-10 flex items-center justify-between">
+        <meta name="google-site-verification" content="Pmj0CrW1jpN8kGTYeV-yZNq8HNlwjrHlasC9IlgUnK0" />
         <Logo />
 
         <button className="inline-block sm:hidden z-50" onClick={toggle} aria-label="Hamburger Menu">
