@@ -72,7 +72,7 @@ const Footer = () => {
 
       <div className="w-full  mt-16 md:mt-24 relative font-medium border-t border-solid border-light py-6 px-8 flex  flex-col md:flex-row items-center justify-between">
         <span className="text-center">
-          &copy;2024 Rezoom.
+          &copy;2024 Refume.
         </span>
         <Link
           href="/sitemap.xml"
@@ -82,7 +82,7 @@ const Footer = () => {
         </Link>
         <div className="text-center">
           Made with &hearts; by{" "}
-          <a href="https://rezoom.vercel.com" className="underline" target="_blank">
+          <a href="https://refume.vercel.com" className="underline" target="_blank">
             Korede
           </a>
         </div>
