@@ -1,6 +1,7 @@
 import ContactForm from "@/src/components/Contact/ContactForm";
 import LottieAnimation from "@/src/components/Contact/LottieAnimation";
 import siteMetadata from "@/src/utils/siteMetaData";
+import Head from 'next/head';
 
 
 export const metadata = {
@@ -11,6 +12,15 @@ export const metadata = {
 
 export default function Contact() {
   return (
+    <>
+    <Head>
+      {/* Add the script to load Google AdSense */}
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5111592454908081"
+        crossOrigin="anonymous"
+      />
+    </Head>
     <section className="w-full h-auto md:h-[75vh] border-b-2 border-solid border-dark dark:border-light flex  flex-col md:flex-row items-center justify-center text-dark dark:text-light">
       <div className="inline-block w-full sm:w-4/5 md:w-2/5 h-full md:border-r-2 border-solid border-dark dark:border-light"><LottieAnimation /></div>
       <div className="w-full  md:w-3/5 flex flex-col items-start justify-center px-5 xs:px-10 md:px-16 pb-8">
@@ -18,5 +28,6 @@ export default function Contact() {
         <ContactForm />
       </div>
     </section>
+    </>
   );
 }
