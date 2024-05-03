@@ -52,11 +52,8 @@ const CategoryPage = ({ params }) => {
     <>
     <Head>
       {/* Add the script to load Google AdSense */}
-      <script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5111592454908081"
-        crossOrigin="anonymous"
-      />
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5111592454908081"
+     crossorigin="anonymous"></script>
     </Head>
     <article className="mt-12 flex flex-col text-dark dark:text-light">
       <div className=" px-5 sm:px-10  md:px-24  sxl:px-32 flex flex-col">

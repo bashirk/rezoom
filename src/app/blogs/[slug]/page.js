@@ -87,11 +87,8 @@ export default function BlogPage({ params }) {
     <>
     <Head>
       {/* Add the script to load Google AdSense */}
-      <script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5111592454908081"
-        crossOrigin="anonymous"
-      />
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5111592454908081"
+     crossorigin="anonymous"></script>
     </Head>
     <script
         type="application/ld+json"

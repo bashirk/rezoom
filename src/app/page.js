@@ -10,11 +10,8 @@ export default function Home() {
     <>
     <Head>
       {/* Add the script to load Google AdSense */}
-      <script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5111592454908081"
-        crossOrigin="anonymous"
-      />
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5111592454908081"
+     crossorigin="anonymous"></script>
     </Head>
     <main className="flex flex-col items-center justify-center">
       <HomeCoverSection blogs={allBlogs} />
