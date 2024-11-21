@@ -93,14 +93,14 @@ const Header = () => {
           aria-label="Toggle Menu"
         >
           {menuOpen ? (
-            <span className="text-2xl font-bold text-black">&times;</span> // Close Icon
+            <span className="text-4xl font-bold text-black">&times;</span> // Close Icon
           ) : (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              className="w-6 h-6"
+              className="w-6 h-6 text-black dark:text-white"
             >
               <path
                 strokeLinecap="round"
