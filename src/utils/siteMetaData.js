@@ -3,17 +3,17 @@ const siteMetadata = {
     title: 'Refume Blog',
     author: 'Korede Bashir',
     headerTitle: 'phode',
-    description: 'A blog about coding and actual WHYs.',
+    description: 'A blog about tech, philosophy and actual reflections.',
     language: 'en-us',
-    theme: 'system', // system, dark or light
-    siteUrl: 'https://refume.vercel.app', // your website URL
+    theme: 'system',
+    siteUrl: 'https://refume.vercel.app',
     siteLogo: '/logo.png',
-    socialBanner: '/social-banner.png', // add social banner in the public folder
+    socialBanner: '/social-banner.png',
     email: 'bashirkorede@gmail.com', 
     github: 'https://github.com/bashirk',
-    twitter: 'https://twitter.com/codecog',
+    twitter: 'https://x.com/',
     facebook: 'https://facebook.com',
-    youtube: 'https://youtube.com/codecog',
+    youtube: 'https://youtube.com/',
     linkedin: 'https://www.linkedin.com/in/bashir-korede/',
     locale: 'en-US',
   }
