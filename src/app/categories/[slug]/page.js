@@ -32,7 +32,6 @@ export async function generateMetadata({ params }) {
   };
 }
 
-
 const CategoryPage = ({ params }) => {
   const allCategories = ["all"];
   const blogs = allBlogs.filter((blog) => {
@@ -46,32 +45,34 @@ const CategoryPage = ({ params }) => {
       }
       return slugified === params.slug;
     });
+  })
+  // Sort blogs by date in descending order (most recent first)
+  .sort((a, b) => {
+    const dateA = new Date(a.publishedAt);
+    const dateB = new Date(b.publishedAt);
+    return dateB - dateA;
   });
 
   return (
     <>
-    <Head>
-      {/* Add the script to load Google AdSense */}
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5111592454908081"
-     crossorigin="anonymous"></script>
-    </Head>
-    <article className="mt-12 flex flex-col text-dark dark:text-light">
-      <div className=" px-5 sm:px-10  md:px-24  sxl:px-32 flex flex-col">
-        <h1 className="mt-6 font-semibold text-2xl md:text-4xl lg:text-5xl">#{params.slug}</h1>
+      <div className="px-5 sm:px-10 md:px-24 sxl:px-32 flex flex-col">
+        <h1 className="mt-6 font-semibold text-2xl md:text-4xl lg:text-5xl">
+          #{params.slug}
+        </h1>
         <span className="mt-2 inline-block">
           Discover more categories and expand your knowledge!
         </span>
       </div>
+
       <Categories categories={allCategories} currentSlug={params.slug} />
 
-      <div className="grid  grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 grid-rows-2 gap-16 mt-5 sm:mt-10 md:mt-24 sxl:mt-32 px-5 sm:px-10 md:px-24 sxl:px-32">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 grid-rows-2 gap-16 mt-5 sm:mt-10 md:mt-24 sxl:mt-32 px-5 sm:px-10 md:px-24 sxl:px-32">
         {blogs.map((blog, index) => (
           <article key={index} className="col-span-1 row-span-1 relative">
             <BlogLayoutThree blog={blog} />
           </article>
         ))}
       </div>
-    </article>
     </>
   );
 };
