@@ -1,4 +1,3 @@
-// please update required information
 const siteMetadata = {
     title: 'Refume Blog',
     author: 'Korede Bashir',

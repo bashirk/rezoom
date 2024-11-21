@@ -32,23 +32,28 @@ const Header = () => {
   }, []);
 
   return (
-    <header
-      className={cx(
-        "w-full backdrop-blur-sm fixed top-0 left-0 z-50 transition-all duration-300",
-        isSticky
-          ? "py-2 bg-opacity-90 backdrop-blur-md"
-          : "py-4",
-        mode === "light"
-          ? "bg-white text-gray-800 shadow-md"
-          : "bg-gray-900 text-gray-200 shadow-lg"
-      )}
-    >
-      <div className="max-w-6xl mx-auto flex items-center justify-between px-6">
+    <header>
+      <div
+        className={cx(
+          "w-full flex items-center justify-between px-6 lg:px-12 transition-all duration-300 fixed top-0 z-50",
+
+          isSticky
+            ? "py-2 bg-opacity-90 backdrop-blur-md"
+            : "py-6 bg-opacity-100 backdrop-blur-md",
+          mode === "light"
+            ? "bg-white text-gray-800 shadow-md"
+            : "bg-gray-900 text-gray-200 shadow-lg"
+        )}
+      >
         {/* Logo */}
         <Logo />
 
         {/* Desktop Navigation */}
-        <nav className="hidden sm:flex items-center space-x-6">
+        <nav
+          className={cx(
+            "hidden sm:flex items-center space-x-6 ml-auto" // Show only on small and larger screens
+          )}
+        >
           <Link
             href="/"
             className="text-lg dark:text-white font-medium hover:text-orange-600 dark:hover:text-yellow-400 transition"
@@ -71,7 +76,9 @@ const Header = () => {
             onClick={() => setMode(mode === "light" ? "dark" : "light")}
             className={cx(
               "w-8 h-8 rounded-full flex items-center justify-center transition-colors",
-              mode === "light" ? "bg-gray-800 text-gray-200" : "bg-gray-200 text-white"
+              mode === "light"
+                ? "bg-gray-800 text-gray-200"
+                : "bg-gray-200 text-white"
             )}
             aria-label="Toggle Theme"
           >
@@ -81,7 +88,7 @@ const Header = () => {
 
         {/* Mobile Menu Icon */}
         <button
-          className="sm:hidden flex items-center justify-center w-10 h-10 rounded-full bg-gray-800 text-black dark:bg-gray-200 dark:text-white"
+          className="flex sm:hidden items-center justify-center w-10 h-10 rounded-full bg-gray-800 text-white dark:bg-gray-200 dark:text-gray-800"
           onClick={toggleMenu}
           aria-label="Toggle Menu"
         >
@@ -110,39 +117,69 @@ const Header = () => {
       {menuOpen && (
         <nav
           className={cx(
-            "fixed inset-0 flex flex-col items-center justify-center bg-white dark:bg-gray-900 z-40 transition-transform transform",
-            menuOpen ? "translate-x-0" : "translate-x-full"
+            "fixed inset-0 flex flex-col items-center justify-center z-40 transition-opacity duration-300",
+            "bg-gradient-to-b from-white to-amber-200 dark:from-cyan-900 dark:to-slate-950 backdrop-blur-md",
+            menuOpen ? "opacity-100" : "opacity-0"
           )}
         >
           <Link
             href="/"
-            className="text-2xl font-semibold mb-6 hover:text-orange-600 dark:hover:text-yellow-400 transition"
+            className="text-2xl font-semibold mb-6 text-slate-800 dark:text-slate-200 hover:text-orange-600 dark:hover:text-yellow-400 transition"
             onClick={toggleMenu}
           >
             Home
           </Link>
           <Link
             href="/about"
-            className="text-2xl font-semibold mb-6 hover:text-orange-600 dark:hover:text-yellow-400 transition"
+            className="text-2xl font-semibold mb-6 text-slate-800 dark:text-slate-200 hover:text-orange-600 dark:hover:text-yellow-400 transition"
             onClick={toggleMenu}
           >
             About
           </Link>
           <Link
             href="/contact"
-            className="text-2xl font-semibold mb-6 hover:text-orange-600 dark:hover:text-yellow-400 transition"
+            className="text-2xl font-semibold mb-6 text-slate-800 dark:text-slate-200 hover:text-orange-600 dark:hover:text-yellow-400 transition"
             onClick={toggleMenu}
           >
             Contact
           </Link>
+          <div className="flex items-center space-x-6 mt-8">
+            <a
+              href={siteMetadata.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-700 dark:text-slate-300 hover:text-orange-600 dark:hover:text-yellow-400 transition"
+              aria-label="LinkedIn"
+            >
+              <LinkedinIcon className="w-6 h-6" />
+            </a>
+            <a
+              href={siteMetadata.twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-slate-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-yellow-400 transition"
+              aria-label="Twitter"
+            >
+              <TwitterIcon className="w-6 h-6" />
+            </a>
+            <a
+              href={siteMetadata.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-yellow-400 transition"
+              aria-label="GitHub"
+            >
+              <GithubIcon className="w-6 h-6" />
+            </a>
+          </div>
           <button
             onClick={() => {
               setMode(mode === "light" ? "dark" : "light");
               toggleMenu();
             }}
             className={cx(
-              "w-12 h-12 rounded-full flex items-center justify-center transition-colors mt-8",
-              mode === "light" ? "bg-gray-800 text-white" : "bg-gray-200 text-gray-800"
+              "w-12 h-12 rounded-full flex items-center justify-center mt-8",
+              mode === "light" ? "bg-gray-800 text-black" : "bg-gray-200 text-yellow-500"
             )}
             aria-label="Toggle Theme"
           >

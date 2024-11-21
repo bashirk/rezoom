@@ -30,17 +30,17 @@ const Footer = () => {
 
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex items-center border-2 border-gray-300 dark:border-gray-700 rounded-full overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
+              className="flex flex-col sm:flex-row items-stretch gap-4 sm:gap-0 border-2 border-gray-300 dark:border-gray-700 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
             >
               <input
                 type="email"
                 placeholder="Enter your email"
                 {...register("email", { required: true, maxLength: 80 })}
-                className="flex-grow px-4 py-3 bg-transparent text-gray-800 dark:text-gray-100 placeholder-gray-500 focus:outline-none"
+                className="flex-grow px-4 py-3 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 placeholder-gray-500 focus:outline-none border-none"
               />
               <button
                 type="submit"
-                className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-6 py-3 rounded-full shadow-md hover:shadow-lg flex items-center gap-2 transition-all"
+                className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-6 py-3 sm:rounded-r-lg shadow-md hover:shadow-lg flex items-center justify-center gap-2 transition-all border-none"
               >
                 <span>Subscribe</span>
                 <svg
