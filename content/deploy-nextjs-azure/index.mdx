@@ -1,0 +1,213 @@
+---
+title: "The Painless Way to Deploy a Next.js App to Azure App Service"
+author: "Bashirk"
+image: "../../public/blogs/top_sre_2023.webp"
+description: ""
+publishedAt: "2024-12-02"
+updatedAt: "2024-12-02"
+isPublished: true
+tags: 
+- code quality
+- cloud
+- technology
+- azure
+- nodejs
+---
+
+## Introduction
+
+Deploying a Next.js application to Azure App Service can seem daunting, especially if you're unfamiliar with Azure’s nuances. But with the right workflow, it can be surprisingly painless! This guide will take you step by step through setting up your Next.js app for deployment, configuring your Azure environment, and automating the process using GitHub Actions.
+
+---
+
+## **Why Choose Azure App Service for Next.js?**
+
+Azure App Service provides a scalable and reliable platform to deploy web applications, including modern frameworks like Next.js. Key benefits include:
+- **Managed hosting**: No need to manage servers or containers.
+- **Seamless CI/CD**: Integrates directly with GitHub Actions for automated deployments.
+- **Scaling and monitoring**: Easily scale your app as traffic grows while monitoring performance.
+
+---
+
+## **Prerequisites**
+
+Before we dive in, ensure you have the following:
+1. **Azure Account**: Create one [here](https://azure.microsoft.com/) if you don’t have it yet.
+2. **Next.js App**: A working Next.js project (we’ll use one with TailwindCSS and Prisma in this example).
+3. **Azure App Service**: An app service instance ready to deploy to.
+4. **GitHub Repository**: Your Next.js code should be hosted on GitHub.
+
+---
+
+## **Step 1: Prepare Your Next.js App for Deployment**
+
+### 1.1 Update `package.json` Scripts
+Ensure your `package.json` includes a proper `start` script for production:
+```json
+"scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "start": "node_modules/next/dist/bin/next start -p 8080",
+  "lint": "next lint"
+}
+```
+The `start` script explicitly uses the Next.js binary and listens on port `8080`, which Azure expects.
+
+### 1.2 Use the Build Command
+Before deploying, Next.js apps need to be built for production:
+```bash
+npm run build
+```
+This generates the `.next` folder, containing your app’s static files and server code.
+
+---
+
+## **Step 2: Configure Azure App Service**
+
+### 2.1 Create an Azure App Service
+1. Navigate to the [Azure portal](https://portal.azure.com/).
+2. Create a new **Web App** with the following:
+   - **Runtime Stack**: Node.js 18 or higher.
+   - **OS**: Linux.
+   - **Region**: Choose a region close to your users.
+3. Note your app name and the **Publish Profile** (we’ll use it later).
+
+---
+
+## **Step 3: Automate Deployment with GitHub Actions**
+
+The real magic happens with CI/CD pipelines. GitHub Actions allows you to automatically build and deploy your app whenever you push changes to your repository.
+
+### 3.1 Add a GitHub Workflow File
+In your repository, create a file at `.github/workflows/azure-deploy.yml` with the following content:
+
+```yaml
+name: Build and deploy Node.js app to Azure Web App
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code
+      - uses: actions/checkout@v4
+      
+      # Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      
+      # Install dependencies, build the app, and prepare Prisma (if applicable)
+      - name: Install, build, and test
+        run: |
+          npm install
+          npx prisma generate
+          npm run build
+      
+      # Zip artifacts for deployment
+      - name: Zip app for deployment
+        run: zip -r next.zip .next public package.json package-lock.json node_modules
+      
+      # Upload the build artifact
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nextjs-artifact
+          path: next.zip
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      # Download the build artifact
+      - uses: actions/download-artifact@v4
+        with:
+          name: nextjs-artifact
+      
+      # Deploy to Azure
+      - uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'YOUR_AZURE_APP_NAME'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          package: next.zip
+```
+
+### 3.2 Add the Publish Profile to GitHub Secrets
+1. Download the **Publish Profile** from your Azure App Service.
+2. In GitHub, navigate to **Settings > Secrets and variables > Actions**.
+3. Add a new secret:
+   - **Name**: `AZURE_PUBLISH_PROFILE`
+   - **Value**: Paste the content of the publish profile.
+
+---
+
+## **Step 4: Configure Environment Variables**
+Azure App Service allows you to set environment variables without including them in your codebase.
+
+### **Steps to Add Environment Variables:**
+In the Azure Portal, go to your **App Service**.
+
+Navigate to **Configuration > Application Settings**.
+
+Click **Add** and input the key-value pairs for your environment variables:
+
+For example, `NEXT_PUBLIC_API_URL` as the key and your API URL as the value.
+📸 Screenshot: Azure App Service > Configuration > Application Settings screen with an example variable being added.
+
+Save the changes. Azure will automatically inject these variables into the environment during runtime.
+
+
+## **Step 5: Test the Deployment**
+
+### 5.1 Push Your Code
+Push or merge your changes to the `main` branch. This triggers the GitHub Actions workflow.
+
+### 5.2 Verify on Azure
+1. Go to the Azure portal and open your App Service.
+2. Check the **Logs** tab to ensure the deployment succeeded.
+3. Visit your app’s URL (e.g., `https://your-app-name.azurewebsites.net`).
+
+---
+
+## **Troubleshooting Common Issues**
+
+### **Error: `MODULE_NOT_FOUND`**
+If you encounter module errors during deployment:
+- Ensure `node_modules` is included in the zipped package.
+- Double-check that `npm install` ran during the build process.
+
+### **App Fails to Start**
+Azure uses `PORT=8080`. Ensure your app listens on this port:
+```json
+"start": "node_modules/next/dist/bin/next start -p 8080"
+```
+
+---
+
+## **Optimizing for Performance**
+
+For smaller deployment packages and faster builds:
+1. Add `output: 'standalone'` to your `next.config.js`:
+   ```javascript
+   module.exports = {
+       output: 'standalone',
+   };
+   ```
+2. Update the zipping command:
+   ```bash
+   zip -r next.zip .next/standalone .next/static public package.json package-lock.json node_modules
+   ```
+
+---
+
+## **Conclusion**
+
+Deploying a Next.js app to Azure App Service doesn’t have to be complicated. With a properly configured `package.json`, streamlined GitHub Actions workflows, and Azure App Service’s flexibility, you can set up automated and hassle-free deployments in no time.
+
+By following this guide, you'll not only save time but also build a robust foundation for deploying scalable Next.js applications. Happy coding! 🎉

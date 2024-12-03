@@ -95,6 +95,7 @@ const Header = () => {
           {menuOpen ? (
             <span className="text-4xl font-bold text-black">&times;</span> // Close Icon
           ) : (
+            // Hamburger icon
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
